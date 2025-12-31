@@ -19,7 +19,9 @@
                 <span class="font-bold">To:</span> {{ transaction.target_account?.customer?.name }} ( {{ transaction.target_account?.type }} account )
                 - {{ transaction.target_account?.id }}
             </span>
-            <p v-if="transaction.status == 'rejected'"><span class="font-bold">Reason:</span> {{ transaction.rejection_reason }}</p>
+            <p v-if="transaction.status == 'rejected'" class="text-gray-500">
+                <span class="font-bold">Reason:</span> {{ transaction.rejection_reason }}
+            </p>
         </div>
         <div class="ml-auto flex flex-col justify-between">
             <span class="text-right text-xl font-bold">{{ amountSign() }} {{ formattedMoney(transaction.amount) }} €</span>
