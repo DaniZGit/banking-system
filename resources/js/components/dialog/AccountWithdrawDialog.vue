@@ -86,8 +86,10 @@ const emit = defineEmits<{
 const validationSchema = computed(() =>
     toTypedSchema(
         z.object({
-            amount: z.number().positive(),
-            // .max(Number((account.balance / 100).toFixed(2)), 'Amount cannot exceed your current balance'),
+            amount: z
+                .number()
+                .positive()
+                .max(Number((account.balance / 100).toFixed(2)), 'Amount cannot exceed your current balance'),
         }),
     ),
 );

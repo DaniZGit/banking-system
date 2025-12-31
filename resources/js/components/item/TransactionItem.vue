@@ -9,16 +9,17 @@
         <div class="flex flex-col">
             <div class="flex items-center gap-2">
                 <span class="text-xl font-bold capitalize">{{ transaction.type }}</span>
-                <Badge>{{ transaction.status }}</Badge>
+                <Badge class="capitalize">{{ transaction.status }}</Badge>
             </div>
-            <span v-if="transaction.type == 'withdrawal' || transaction.type == 'transfer'" class="text-gray-500 capitalize">
+            <span v-if="transaction.source_account" class="text-gray-500 capitalize">
                 <span class="font-bold">From:</span> {{ transaction.source_account?.customer?.name }} ( {{ transaction.source_account?.type }} account
                 ) - {{ transaction.source_account?.id }}
             </span>
-            <span v-if="transaction.type == 'deposit' || transaction.type == 'transfer'" class="text-gray-500 capitalize">
+            <span v-if="transaction.target_account" class="text-gray-500 capitalize">
                 <span class="font-bold">To:</span> {{ transaction.target_account?.customer?.name }} ( {{ transaction.target_account?.type }} account )
                 - {{ transaction.target_account?.id }}
             </span>
+            <p v-if="transaction.status == 'rejected'">{{ transaction.rejection_reason }}</p>
         </div>
         <div class="ml-auto flex flex-col justify-between">
             <span class="text-right text-xl font-bold">{{ amountSign() }} {{ formattedMoney(transaction.amount) }} €</span>
@@ -44,6 +45,7 @@ export interface Transaction {
     status: TransactionStatus;
     source_account: Account | null;
     target_account: Account | null;
+    rejection_reason: string | null;
     created_at: string;
 }
 
